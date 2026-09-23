@@ -152,8 +152,6 @@
   @media (max-width:760px){
     .page{padding:0 16px 64px;}
     header{margin-bottom:40px;}
-    .brand-emblem{height:32px;}
-    .brand-word{display:none;}
     h1{font-size:30px;}
     .stats{grid-template-columns:repeat(2,1fr);}
     .screen-block,.screen-block.reverse{grid-template-columns:1fr;gap:24px;}
@@ -164,6 +162,10 @@
     .row2{grid-template-columns:1fr;gap:0;}
     .sig{flex-direction:column;align-items:flex-start;}
     .sig-contact{text-align:left;}
+  }
+  @media (max-width:639px){
+    .brand-emblem{height:32px;}
+    .brand-word{display:none;}
   }
   @media (prefers-reduced-motion:reduce){
     html{scroll-behavior:auto;}
