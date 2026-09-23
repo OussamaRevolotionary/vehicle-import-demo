@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vehicle Import Operations Platform — Live Demo</title>
+<meta name="description" content="A live operations platform for vehicle importers: every car tracked from sourcing to sale, with containers, customs, landed cost and multi-currency financials in one dashboard.">
+<meta name="theme-color" content="#0a0d13">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Vehicle Import Operations Platform — live walkthrough">
+<meta property="og:description" content="Know exactly where every vehicle is, down to the container. Real screens from a system already running — book a 20-minute walkthrough.">
+<meta property="og:image" content="assets/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23dc2626'/%3E%3Cg fill='none' stroke='%23fff' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' transform='translate(4 4)'%3E%3Cpath d='M3 12l2-5h11l3 5'/%3E%3Cpath d='M4 12h16v4H4z'/%3E%3C/g%3E%3C/svg%3E">
+<style>
+  :root{
+    color-scheme:dark;
+    --bg:#0a0d13;
+    --surface:#12161f;
+    --surface-2:#1a2029;
+    --border:#252c38;
+    --border-strong:#3a4252;
+    --text:#eef1f6;
+    --text-dim:#a3adbf;
+    --text-faint:#7a8497;
+    --accent:#dc2626;
+    --accent-2:#f0473c;
+    --teal:#2dd4bf;
+    --danger:#f87171;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    line-height:1.5;
+  }
+  .page{max-width:1080px;margin:0 auto;padding:0 24px 80px;}
+  a{color:inherit;}
+  :focus-visible{outline:2px solid var(--teal);outline-offset:3px;border-radius:6px;}
+
+  /* header */
+  header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:28px 0 20px;border-bottom:1px solid var(--border);margin-bottom:56px;}
+  .brand{display:flex;align-items:center;gap:10px;}
+  .brand-mark{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .brand-mark svg{width:17px;height:17px;stroke:#fff;}
+  .brand-text{font-size:14px;font-weight:600;letter-spacing:.2px;}
+  .brand-sub{font-size:11px;color:var(--text-faint);letter-spacing:.3px;}
+  .badge{font-size:11px;color:var(--teal);border:1px solid rgba(45,212,191,.35);background:rgba(45,212,191,.08);padding:5px 11px;border-radius:100px;letter-spacing:.3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:60%;}
+
+  /* hero */
+  .eyebrow{font-size:12px;letter-spacing:1.5px;color:var(--accent-2);font-weight:700;text-transform:uppercase;margin:0 0 16px;}
+  h1{font-size:42px;line-height:1.15;letter-spacing:-.5px;margin:0 0 20px;font-weight:700;max-width:760px;}
+  h1 span{color:var(--text-dim);}
+  .lede{font-size:17px;color:var(--text-dim);max-width:620px;margin:0 0 32px;}
+  .cta-row{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-bottom:56px;}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--accent);color:#fff;text-decoration:none;font:inherit;font-size:14px;font-weight:600;padding:13px 22px;border:0;border-radius:8px;cursor:pointer;transition:background .15s;}
+  .btn:hover{background:var(--accent-2);}
+  .btn[disabled]{opacity:.45;cursor:not-allowed;background:var(--accent);}
+  .btn-ghost{color:var(--text-dim);text-decoration:none;font-size:14px;border-bottom:1px solid var(--border);padding-bottom:2px;}
+  .btn-ghost:hover{color:var(--text);}
+
+  /* stat strip */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:72px;}
+  .stat{background:var(--surface);padding:22px 20px;}
+  .stat b{display:block;font-size:24px;font-weight:700;margin-bottom:4px;font-variant-numeric:tabular-nums;}
+  .stat span{font-size:12.5px;color:var(--text-faint);letter-spacing:.2px;}
+
+  /* section headings */
+  .section-head{max-width:620px;margin:0 0 36px;}
+  .section-head h2{font-size:26px;margin:0 0 10px;letter-spacing:-.3px;}
+  .section-head p{font-size:15px;color:var(--text-dim);margin:0;}
+  section{margin-bottom:88px;}
+
+  /* screenshots */
+  .screen-block{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;margin-bottom:64px;}
+  .screen-block.reverse .frame{order:2;}
+  .screen-block.reverse .copy{order:1;}
+  .frame{background:var(--surface-2);border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:0 30px 60px -20px rgba(0,0,0,.6);}
+  .frame-bar{display:flex;gap:6px;padding:11px 14px;background:var(--surface-2);border-bottom:1px solid var(--border);}
+  .frame-bar i{width:9px;height:9px;border-radius:50%;background:#3a4252;display:block;}
+  .frame a{display:block;cursor:zoom-in;}
+  .frame img,.frame video{display:block;width:100%;height:auto;background:#f4f6f8;}
+  .copy .tag{font-size:11px;color:var(--teal);font-weight:700;letter-spacing:.8px;text-transform:uppercase;margin-bottom:10px;}
+  .copy h3{font-size:22px;margin:0 0 12px;letter-spacing:-.2px;}
+  .copy p{font-size:15px;color:var(--text-dim);margin:0;}
+
+  /* capability grid */
+  .cap-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+  .cap{background:var(--surface);padding:26px 24px;}
+  .cap svg{width:20px;height:20px;stroke:var(--accent-2);fill:none;stroke-width:1.6;margin-bottom:14px;}
+  .cap h4{font-size:15px;margin:0 0 8px;font-weight:600;}
+  .cap p{font-size:13.5px;color:var(--text-dim);margin:0;line-height:1.5;}
+
+  /* booking */
+  .book-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:48px;scroll-margin-top:24px;}
+  .book-intro{text-align:center;max-width:540px;margin:0 auto 36px;}
+  .book-intro h2{font-size:26px;margin:0 0 14px;}
+  .book-intro p{font-size:15px;color:var(--text-dim);margin:0;}
+  .book-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:40px;align-items:start;}
+  .book-grid > *{min-width:0;}
+  .step{font-size:11px;letter-spacing:.8px;text-transform:uppercase;color:var(--teal);font-weight:700;margin:0 0 12px;}
+  .days{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 8px;margin:0 -2px 20px;scrollbar-width:thin;}
+  .day{flex:0 0 auto;min-width:72px;padding:10px 12px;border:1px solid var(--border);border-radius:10px;background:var(--surface-2);color:var(--text);text-align:center;cursor:pointer;font:inherit;}
+  .day b{display:block;font-size:13px;font-weight:600;}
+  .day span{display:block;font-size:11.5px;color:var(--text-dim);white-space:nowrap;}
+  .day:hover,.time:hover{border-color:var(--border-strong);}
+  .day[aria-pressed="true"]{border-color:var(--accent);background:rgba(220,38,38,.14);}
+  .times{display:grid;grid-template-columns:repeat(auto-fill,minmax(82px,1fr));gap:8px;}
+  .time{padding:9px 0;border:1px solid var(--border);border-radius:8px;background:transparent;color:var(--text);font:inherit;font-size:13.5px;cursor:pointer;font-variant-numeric:tabular-nums;}
+  .time[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff;}
+  .tz-note{font-size:12px;color:var(--text-faint);margin:14px 0 0;}
+  .sk{flex:0 0 72px;height:52px;border-radius:10px;background:linear-gradient(90deg,var(--surface-2) 0%,#222937 50%,var(--surface-2) 100%);background-size:200% 100%;animation:shimmer 1.2s linear infinite;}
+  .sk.t{height:38px;flex:none;border-radius:8px;}
+  @keyframes shimmer{from{background-position:200% 0}to{background-position:-200% 0}}
+  .field{margin-bottom:14px;}
+  .field label{display:block;font-size:12.5px;color:var(--text-dim);margin:0 0 6px;}
+  .field label em{font-style:normal;color:var(--text-faint);}
+  .field input,.field textarea{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);padding:11px 12px;font:inherit;font-size:14px;}
+  .field textarea{resize:vertical;min-height:76px;}
+  .field input:focus,.field textarea:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(45,212,191,.15);}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;}
+  .summary{font-size:13.5px;color:var(--text-dim);margin:4px 0 14px;min-height:20px;}
+  .summary strong{color:var(--text);}
+  .form-msg{font-size:13.5px;margin:12px 0 0;min-height:1em;}
+  .form-msg.err{color:var(--danger);}
+  #book-submit{width:100%;}
+  .fallback{text-align:center;padding:12px 0 4px;}
+  .fallback p{color:var(--text-dim);font-size:15px;margin:0 0 20px;}
+  .success{text-align:center;max-width:520px;margin:0 auto;}
+  .success .tick{width:52px;height:52px;border-radius:50%;background:rgba(45,212,191,.12);border:1px solid rgba(45,212,191,.4);display:flex;align-items:center;justify-content:center;margin:0 auto 18px;}
+  .success .tick svg{width:24px;height:24px;stroke:var(--teal);fill:none;stroke-width:2.4;}
+  .success h3{font-size:22px;margin:0 0 10px;}
+  .success p{color:var(--text-dim);font-size:15px;margin:0 0 20px;}
+  .success p strong{color:var(--text);}
+  [hidden]{display:none !important;}
+
+  /* signature */
+  .sig{margin-top:56px;padding-top:28px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px;}
+  .sig-name{font-size:14px;font-weight:700;letter-spacing:.3px;}
+  .sig-role{font-size:12.5px;color:var(--text-dim);margin-top:3px;}
+  .sig-contact{font-size:12.5px;color:var(--text-faint);text-align:right;}
+  .sig-contact a{color:var(--text-dim);text-decoration:none;}
+  .sig-contact a:hover{color:var(--text);}
+
+  @media (max-width:760px){
+    .page{padding:0 16px 64px;}
+    header{margin-bottom:40px;}
+    h1{font-size:30px;}
+    .stats{grid-template-columns:repeat(2,1fr);}
+    .screen-block,.screen-block.reverse{grid-template-columns:1fr;gap:24px;}
+    .screen-block .frame,.screen-block.reverse .frame,.screen-block .copy,.screen-block.reverse .copy{order:0;}
+    .cap-grid{grid-template-columns:1fr;}
+    .book-card{padding:28px 16px;}
+    .book-grid{grid-template-columns:1fr;gap:28px;}
+    .row2{grid-template-columns:1fr;gap:0;}
+    .sig{flex-direction:column;align-items:flex-start;}
+    .sig-contact{text-align:left;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
+    .sk{animation:none;}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <div class="brand">
+      <div class="brand-mark"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12l2-5h11l3 5"/><path d="M4 12h16v4H4z"/><circle cx="7.5" cy="18" r="1.5"/><circle cx="16.5" cy="18" r="1.5"/></svg></div>
+      <div>
+        <div class="brand-text">OussamaLabs</div>
+        <div class="brand-sub">Industrial Tech Translator</div>
+      </div>
+    </div>
+    <div class="badge" id="badge">Live product walkthrough</div>
+  </header>
+
+  <main>
+  <div class="eyebrow">Vehicle Import &amp; Fleet Operations Platform</div>
+  <h1>Know exactly where every vehicle is — <span>down to the container.</span></h1>
+  <p class="lede">A custom-built operations system that replaces spreadsheets, WhatsApp updates and guesswork with one live view of your import pipeline — from sourcing in <span data-bind="origin">China</span> to customs clearance<span data-bind="market-in"></span> to the day the car is sold.</p>
+  <div class="cta-row">
+    <a class="btn" href="#book">
+      Book a 20-minute walkthrough
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+    <a class="btn-ghost" href="#screens">See it in action ↓</a>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><b>13</b><span>Vehicles tracked live in this deployment</span></div>
+    <div class="stat"><b>$138,800</b><span>Sourced value in the pipeline</span></div>
+    <div class="stat"><b data-bind="currency-pair">Any currency</b><span>Local currency and USD, side by side</span></div>
+    <div class="stat"><b>1</b><span>Dashboard replacing 5+ spreadsheets</span></div>
+  </div>
+
+  <section id="screens">
+    <div class="section-head">
+      <h2>See it in action</h2>
+      <p>These are real screens from a system already running — not mockups. This deployment runs in Algerian dinar; currency, ports and workflow steps are configured for each client.</p>
+    </div>
+
+    <div class="screen-block">
+      <div class="frame">
+        <div class="frame-bar"><i></i><i></i><i></i></div>
+        <a href="assets/dashboard.webp" target="_blank" rel="noopener" aria-label="Open the fleet dashboard screenshot full size"><img src="assets/dashboard.webp" width="1920" height="900" alt="Fleet operations dashboard showing sourced vehicles, customers, pre-sold vehicles, stock, revenue and the operational pipeline" decoding="async"></a>
+      </div>
+      <div class="copy">
+        <div class="tag">Command Center</div>
+        <h3>One dashboard for the entire fleet</h3>
+        <p>Sourced, on the water, at port, clearing customs or sold — every vehicle's stage in the pipeline, updated live, with revenue tracked in <span data-bind="currency">your local currency</span> alongside USD sourcing cost.</p>
+      </div>
+    </div>
+
+    <div class="screen-block reverse">
+      <div class="frame">
+        <div class="frame-bar"><i></i><i></i><i></i></div>
+        <a href="assets/containers.webp" target="_blank" rel="noopener" aria-label="Open the container tracking screenshot full size"><img src="assets/containers.webp" width="1920" height="900" alt="Container detail page with freight cost, volume, shipment status and a tracking timeline from preparation to arrival" loading="lazy" decoding="async"></a>
+      </div>
+      <div class="copy">
+        <div class="tag">Container Tracking</div>
+        <h3>Stop calling your forwarder for updates</h3>
+        <p>Freight cost, route, ETA and consolidator contact for every container — tracked from the origin port through transit to arrival.</p>
+      </div>
+    </div>
+
+    <div class="screen-block">
+      <div class="frame">
+        <div class="frame-bar"><i></i><i></i><i></i></div>
+        <a href="assets/landed-cost.webp" target="_blank" rel="noopener" aria-label="Open the landed cost manifest screenshot full size"><img src="assets/landed-cost.webp" width="1920" height="900" alt="Vehicle manifest listing purchase price, freight share, customs and total landed cost per vehicle" loading="lazy" decoding="async"></a>
+      </div>
+      <div class="copy">
+        <div class="tag">Landed Cost</div>
+        <h3>Know your real margin before the car lands</h3>
+        <p>Purchase price, freight share and customs cost rolled into one landed-cost figure — per vehicle, not estimated per shipment. Buyer details are redacted here for privacy.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="motion">
+    <div class="section-head">
+      <h2>13 seconds, straight from the platform</h2>
+      <p>No slides — this is the actual interface in motion.</p>
+    </div>
+    <div class="frame">
+      <div class="frame-bar"><i></i><i></i><i></i></div>
+      <video autoplay loop muted playsinline controls preload="metadata" poster="assets/video-poster.webp" width="1280" height="600" aria-label="13-second screen recording of the platform: dashboard, shipment creation and container tracking">
+        <source src="assets/walkthrough.webm" type="video/webm">
+        <source src="assets/walkthrough.mp4" type="video/mp4">
+      </video>
+    </div>
+  </section>
+
+  <section class="capabilities">
+    <div class="section-head">
+      <h2>What's inside</h2>
+      <p>Built for the full <span data-bind="route">China-to-showroom</span> import workflow, end to end.</p>
+    </div>
+    <div class="cap-grid">
+      <div class="cap">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12l2-5h11l3 5"/><path d="M4 12h16v4H4z"/><circle cx="7.5" cy="18" r="1.5"/><circle cx="16.5" cy="18" r="1.5"/></svg>
+        <h4>Vehicle Tracking</h4>
+        <p>Every unit's status from sourcing to sale, in one record.</p>
+      </div>
+      <div class="cap">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg>
+        <h4>Customs Clearance</h4>
+        <p>Bulk or single-container clearance, with document checklists built in.</p>
+      </div>
+      <div class="cap">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="1"/><path d="M3 11h18M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+        <h4>Shipments &amp; Containers</h4>
+        <p>Freight cost, routing and consolidator contact per container.</p>
+      </div>
+      <div class="cap">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="8" r="3.2"/><path d="M2.5 20c0-3.5 2.5-6 5.5-6s5.5 2.5 5.5 6"/><circle cx="17.5" cy="9.5" r="2.6"/><path d="M15 20c0-2.8 1.8-5 4-5"/></svg>
+        <h4>Supplier &amp; Customer Directories</h4>
+        <p>Banking details, company documents and contact history, centralized.</p>
+      </div>
+      <div class="cap">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h13l3 4-3 4H4V4z"/><path d="M4 12v8h13l3-4-3-4"/></svg>
+        <h4>Sales &amp; Orders</h4>
+        <p>Buyer assignment, payment verification and sale documents in one flow.</p>
+      </div>
+      <div class="cap">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="9" r="6"/><circle cx="15" cy="15" r="6"/></svg>
+        <h4>Multi-Currency Financials</h4>
+        <p>Cost and revenue tracked in <span data-bind="currency">your local currency</span> and USD, side by side.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="book-card" id="book" aria-labelledby="book-title">
+    <div class="book-intro">
+      <h2 id="book-title">This is what we build.</h2>
+      <p>The same approach — one live source of truth instead of spreadsheets and phone calls — can be adapted to your operation in weeks, not months. Pick a time for a 20-minute walkthrough on Google Meet.</p>
+    </div>
+
+    <div class="book-grid" id="book-grid">
+      <div id="picker">
+        <p class="step">1 · Pick a day</p>
+        <div class="days" id="days" role="group" aria-label="Available days">
+          <div class="sk"></div><div class="sk"></div><div class="sk"></div><div class="sk"></div><div class="sk"></div>
+        </div>
+        <p class="step">2 · Pick a time</p>
+        <div class="times" id="times" role="group" aria-label="Available times">
+          <div class="sk t"></div><div class="sk t"></div><div class="sk t"></div><div class="sk t"></div><div class="sk t"></div><div class="sk t"></div>
+        </div>
+        <p class="tz-note">Times shown in your time zone: <span id="tz-name">—</span></p>
+      </div>
+
+      <form id="book-form" novalidate>
+        <p class="step">3 · Your details</p>
+        <div class="field">
+          <label for="f-name">Full name</label>
+          <input id="f-name" name="name" type="text" autocomplete="name" maxlength="80" required>
+        </div>
+        <div class="field">
+          <label for="f-email">Work email</label>
+          <input id="f-email" name="email" type="email" autocomplete="email" maxlength="120" required>
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label for="f-company">Company <em>(optional)</em></label>
+            <input id="f-company" name="company" type="text" autocomplete="organization" maxlength="120">
+          </div>
+          <div class="field">
+            <label for="f-phone">Phone / WhatsApp <em>(optional)</em></label>
+            <input id="f-phone" name="phone" type="tel" autocomplete="tel" maxlength="40">
+          </div>
+        </div>
+        <div class="field">
+          <label for="f-message">What do you import, and how many cars a month? <em>(optional)</em></label>
+          <textarea id="f-message" name="message" rows="3" maxlength="1000"></textarea>
+        </div>
+        <div class="hp" aria-hidden="true">
+          <label for="f-website">Website</label>
+          <input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off">
+        </div>
+        <p class="summary" id="slot-summary">Pick a day and time to continue.</p>
+        <button class="btn" id="book-submit" type="submit" disabled>Confirm booking</button>
+        <p class="form-msg" id="form-msg" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+
+    <div class="fallback" id="fallback" hidden>
+      <p id="fallback-reason">Live availability could not be loaded.</p>
+      <a class="btn" data-mailto href="mailto:oussama.g@oussamalabs.com?subject=Walkthrough%20request%20-%20Vehicle%20Import%20Platform">Email to book a walkthrough</a>
+    </div>
+
+    <div class="success" id="book-success" hidden tabindex="-1">
+      <div class="tick"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <h3>You're booked.</h3>
+      <p><strong id="success-when"></strong><br>A Google Calendar invite and a confirmation email are on their way to <strong id="success-email"></strong>.</p>
+      <a class="btn" id="success-meet" href="#" target="_blank" rel="noopener" hidden>Open the Google Meet link</a>
+    </div>
+
+    <noscript>
+      <div class="fallback">
+        <p>The live booking calendar needs JavaScript.</p>
+        <a class="btn" href="mailto:oussama.g@oussamalabs.com?subject=Walkthrough%20request%20-%20Vehicle%20Import%20Platform">Email to book a walkthrough</a>
+      </div>
+    </noscript>
+  </section>
+  </main>
+
+  <footer class="sig">
+    <div>
+      <div class="sig-name">OUSSAMA.G</div>
+      <div class="sig-role">Polymer Engineer × Digital Automation</div>
+    </div>
+    <div class="sig-contact">
+      OussamaLabs — Industrial Tech Translator<br>
+      <a data-mailto href="mailto:oussama.g@oussamalabs.com">oussama.g@oussamalabs.com</a>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  // ---------------------------------------------------------------------------
+  // Configuration. Anything below can also be overridden per prospect with URL
+  // parameters, e.g. ?company=Acme%20Motors&currency=EUR&market=Germany&ref=li-wave1
+  // ---------------------------------------------------------------------------
+  var CONFIG = {
+    bookingApi: 'https://oussama19.app.n8n.cloud/webhook/vehicle-import',
+    contactEmail: 'oussama.g@oussamalabs.com',
+    defaults: {
+      company: '',                     // ?company=  -> header badge, page title, form prefill
+      currency: 'your local currency', // ?currency= -> "EUR", "AED", "Nigerian naira"...
+      origin: 'China',                 // ?origin=   -> where the cars are sourced
+      market: ''                       // ?market=   -> where they are sold
+    },
+    daysShown: 10
+  };
+
+  // ----- Personalisation ------------------------------------------------------
+  var params = new URLSearchParams(location.search);
+  function param(key, max) {
+    return (params.get(key) || '').replace(/\s+/g, ' ').trim().slice(0, max);
+  }
+  var ctx = {
+    company: param('company', 60) || CONFIG.defaults.company,
+    currency: param('currency', 30) || CONFIG.defaults.currency,
+    origin: param('origin', 40) || CONFIG.defaults.origin,
+    market: param('market', 40) || CONFIG.defaults.market,
+    ref: param('ref', 40).replace(/[^\w.-]/g, '')
+  };
+  var bindings = {
+    currency: ctx.currency,
+    origin: ctx.origin,
+    'market-in': ctx.market ? ' in ' + ctx.market : '',
+    route: ctx.origin + '-to-' + (ctx.market || 'showroom'),
+    'currency-pair': param('currency', 30) ? ctx.currency + ' + USD' : 'Any currency'
+  };
+  document.querySelectorAll('[data-bind]').forEach(function (el) {
+    var value = bindings[el.getAttribute('data-bind')];
+    if (value !== undefined) el.textContent = value;
+  });
+  if (ctx.company) {
+    document.getElementById('badge').textContent = 'Prepared for ' + ctx.company;
+    document.title = 'Vehicle Import Operations Platform — for ' + ctx.company;
+    document.getElementById('f-company').value = ctx.company;
+  }
+  document.querySelectorAll('[data-mailto]').forEach(function (a) {
+    a.href = a.href.replace(/^mailto:[^?]+/, 'mailto:' + CONFIG.contactEmail);
+  });
+
+  var video = document.querySelector('video');
+  if (video && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    video.removeAttribute('autoplay');
+    video.pause();
+  }
+
+  // ----- Booking widget -------------------------------------------------------
+  function $(id) { return document.getElementById(id); }
+  var els = {
+    grid: $('book-grid'), days: $('days'), times: $('times'), tzName: $('tz-name'),
+    form: $('book-form'), submit: $('book-submit'), summary: $('slot-summary'), msg: $('form-msg'),
+    fallback: $('fallback'), fallbackReason: $('fallback-reason'),
+    success: $('book-success'), successWhen: $('success-when'), successEmail: $('success-email'), successMeet: $('success-meet')
+  };
+
+  var tz = 'UTC';
+  var hour12 = false;
+  try {
+    tz = Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
+    hour12 = /h1[12]/.test(new Intl.DateTimeFormat(undefined, { hour: 'numeric' }).resolvedOptions().hourCycle || '');
+  } catch (e) { /* keep UTC, 24h */ }
+  // English labels to match the page copy; 12h clock only where the visitor's locale uses it
+  function formatter(opts) {
+    var base = Object.assign({ hour12: hour12 }, opts);
+    try { return new Intl.DateTimeFormat('en-GB', Object.assign({ timeZone: tz }, base)); }
+    catch (e) { return new Intl.DateTimeFormat('en-GB', base); }
+  }
+  var fmt = {
+    key: formatter({ year: 'numeric', month: '2-digit', day: '2-digit' }),
+    weekday: formatter({ weekday: 'short' }),
+    date: formatter({ day: 'numeric', month: 'short' }),
+    time: formatter({ hour: '2-digit', minute: '2-digit' }),
+    long: formatter({ weekday: 'long', day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' })
+  };
+  var tzLabel = tz.replace(/_/g, ' ');
+  els.tzName.textContent = tzLabel;
+
+  var byDay = new Map();
+  var selectedDay = null;
+  var selectedSlot = null;
+  var submitting = false;
+
+  function setMsg(text, isError) {
+    els.msg.textContent = text || '';
+    els.msg.className = 'form-msg' + (isError ? ' err' : '');
+  }
+
+  function updateSummary() {
+    if (selectedSlot) {
+      els.summary.innerHTML = '';
+      els.summary.append('Selected: ');
+      var strong = document.createElement('strong');
+      strong.textContent = fmt.long.format(selectedSlot);
+      els.summary.append(strong, ' (' + tzLabel + ')');
+    } else {
+      els.summary.textContent = 'Pick a day and time to continue.';
+    }
+    els.submit.disabled = !selectedSlot || submitting;
+  }
+
+  function showFallback(reason) {
+    els.grid.hidden = true;
+    els.fallbackReason.textContent = reason + ' Email me and I will send you a few times that suit you.';
+    els.fallback.hidden = false;
+  }
+
+  function renderDays() {
+    var keys = Array.from(byDay.keys()).slice(0, CONFIG.daysShown);
+    if (keys.indexOf(selectedDay) === -1) selectedDay = keys[0];
+    els.days.innerHTML = '';
+    keys.forEach(function (key) {
+      var first = byDay.get(key)[0];
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'day';
+      btn.setAttribute('aria-pressed', String(key === selectedDay));
+      var b = document.createElement('b');
+      b.textContent = fmt.weekday.format(first);
+      var span = document.createElement('span');
+      span.textContent = fmt.date.format(first);
+      btn.append(b, span);
+      btn.addEventListener('click', function () {
+        selectedDay = key;
+        selectedSlot = null;
+        renderDays();
+        updateSummary();
+      });
+      els.days.appendChild(btn);
+    });
+    renderTimes();
+  }
+
+  function renderTimes() {
+    els.times.innerHTML = '';
+    (byDay.get(selectedDay) || []).forEach(function (slot) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'time';
+      btn.textContent = fmt.time.format(slot);
+      btn.setAttribute('aria-pressed', String(selectedSlot !== null && slot.getTime() === selectedSlot.getTime()));
+      btn.addEventListener('click', function () {
+        selectedSlot = slot;
+        renderTimes();
+        updateSummary();
+        setMsg('');
+      });
+      els.times.appendChild(btn);
+    });
+  }
+
+  function loadSlots() {
+    selectedSlot = null;
+    updateSummary();
+    var ctrl = typeof AbortController === 'function' ? new AbortController() : null;
+    var timer = ctrl ? setTimeout(function () { ctrl.abort(); }, 15000) : null;
+    return fetch(CONFIG.bookingApi + '/slots', { cache: 'no-store', signal: ctrl ? ctrl.signal : undefined })
+      .then(function (res) { return res.json().then(function (data) { return { ok: res.ok, data: data }; }); })
+      .then(function (r) {
+        if (!r.ok || !r.data || !r.data.ok || !Array.isArray(r.data.slots)) throw new Error('unavailable');
+        byDay = new Map();
+        r.data.slots.forEach(function (iso) {
+          var d = new Date(iso);
+          if (isNaN(d)) return;
+          var key = fmt.key.format(d);
+          if (!byDay.has(key)) byDay.set(key, []);
+          byDay.get(key).push(d);
+        });
+        if (!byDay.size) return showFallback('No open slots in the next two weeks.');
+        renderDays();
+      })
+      .catch(function () { showFallback('The live calendar could not be loaded.'); })
+      .then(function () { if (timer) clearTimeout(timer); });
+  }
+
+  function showSuccess(email, meetLink) {
+    els.grid.hidden = true;
+    els.successWhen.textContent = fmt.long.format(selectedSlot) + ' (' + tzLabel + ')';
+    els.successEmail.textContent = email;
+    if (/^https:\/\/meet\.google\.com\//.test(meetLink || '')) {
+      els.successMeet.href = meetLink;
+      els.successMeet.hidden = false;
+    }
+    els.success.hidden = false;
+    els.success.focus();
+  }
+
+  els.form.addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    if (submitting) return;
+    if (!selectedSlot) { setMsg('Pick a time slot first.', true); return; }
+    if (!els.form.reportValidity()) return;
+
+    submitting = true;
+    els.submit.disabled = true;
+    els.submit.textContent = 'Booking…';
+    setMsg('');
+
+    var fd = new FormData(els.form);
+    var payload = {
+      name: fd.get('name'),
+      email: fd.get('email'),
+      company: fd.get('company'),
+      phone: fd.get('phone'),
+      message: fd.get('message'),
+      website: fd.get('website'),
+      start: selectedSlot.toISOString(),
+      tz: tz,
+      source: 'vehicle-import-demo' + (ctx.ref ? ':' + ctx.ref : '')
+    };
+
+    fetch(CONFIG.bookingApi + '/book', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+      .then(function (res) {
+        return res.json().catch(function () { return {}; }).then(function (data) { return { status: res.status, ok: res.ok, data: data }; });
+      })
+      .then(function (r) {
+        if (r.ok && r.data.ok) { showSuccess(payload.email, r.data.meetLink); return; }
+        if (r.status === 409) {
+          setMsg(r.data.message || 'That slot was just taken. Please pick another time.', true);
+          return loadSlots();
+        }
+        setMsg(r.data.message || 'Something went wrong. Please try again or email ' + CONFIG.contactEmail + '.', true);
+      })
+      .catch(function () {
+        setMsg('Network error. Please try again or email ' + CONFIG.contactEmail + '.', true);
+      })
+      .then(function () {
+        submitting = false;
+        els.submit.textContent = 'Confirm booking';
+        updateSummary();
+      });
+  });
+
+  loadSlots();
+})();
+</script>
+</body>
+</html>
