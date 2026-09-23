@@ -52,7 +52,7 @@ python tools/build_single_file.py
 
 ## Deploy
 
-Any static host works (GitHub Pages, Netlify, Cloudflare Pages): publish the folder as-is.
-Once the public URL is known, make the `og:image` meta tag absolute
-(`https://<your-domain>/assets/og-image.jpg`) so link previews show the screenshot in
-WhatsApp, LinkedIn and email clients.
+Live on GitHub Pages: **https://oussamarevolotionary.github.io/vehicle-import-demo/**
+(published from `main`, root folder). If the page moves to another host, update the
+absolute `og:url` / `og:image` meta tags so link previews keep working in WhatsApp,
+LinkedIn and email clients.
